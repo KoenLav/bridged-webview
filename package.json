@@ -1,0 +1,25 @@
+{
+  "name": "bridged-webview",
+  "version": "0.0.1",
+  "description": "A bridged WebView implementation for React-Native",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KoenLav/bridged-webview.git"
+  },
+  "keywords": [
+    "react-native",
+    "webview",
+    "bridge",
+    "communication"
+  ],
+  "author": "Koen Lavrijssen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KoenLav/bridged-webview/issues"
+  },
+  "homepage": "https://github.com/KoenLav/bridged-webview#readme"
+}
