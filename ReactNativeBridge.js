@@ -1,6 +1,23 @@
 export default function() {
   console.log("Injected ReactNativeBridge");
 
+  // Find the native side of the bridge and store it in _ReactNativeBridge
+  if (typeof _ReactNativeBridge === "undefined") {
+    if (typeof __REACT_WEB_VIEW_BRIDGE === "undefined") {
+      if (
+        window.webkit &&
+        window.webkit.messageHandlers &&
+        window.webkit.messageHandlers.ReactNative
+      ) {
+        _ReactNativeBridge = window.webkit.messageHandlers.ReactNative;
+      } else {
+        console.warn("ReactNativeBridge not found!");
+      }
+    } else {
+      _ReactNativeBridge = __REACT_WEB_VIEW_BRIDGE;
+    }
+  }
+
   // Usage: ReactNativeBridge.call('myFunctionName', arg1, arg2, function(err, res) { console.log(err, res) });
   ReactNativeBridge = {
     counter: 0,
@@ -46,33 +63,8 @@ export default function() {
         args
       });
 
-      let bridge;
-
-      if (typeof _ReactNativeBridge === "undefined") {
-        if (typeof __REACT_WEB_VIEW_BRIDGE === "undefined") {
-          if (
-            window.webkit &&
-            window.webkit.messageHandlers &&
-            window.webkit.messageHandlers.ReactNative
-          ) {
-            bridge = window.webkit.messageHandlers.ReactNative;
-          } else {
-            console.warn("ReactNativeBridge not found!");
-          }
-        } else {
-          bridge = __REACT_WEB_VIEW_BRIDGE;
-        }
-      } else {
-        bridge = _ReactNativeBridge;
-      }
-
       // Send a message to the native side of things
-      bridge =
-        typeof _ReactNativeBridge === "undefined"
-          ? __REACT_WEB_VIEW_BRIDGE
-          : _ReactNativeBridge;
-
-      bridge.postMessage(message);
+      _ReactNativeBridge.postMessage(message);
 
       // Increment the counter
       this.counter++;
