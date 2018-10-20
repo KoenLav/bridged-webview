@@ -47,7 +47,12 @@ export default function() {
       });
 
       // Send a message to the native side of things
-      _ReactNativeBridge.postMessage(message);
+      const bridge =
+        typeof _ReactNativeBridge === "undefined"
+          ? __REACT_WEB_VIEW_BRIDGE
+          : _ReactNativeBridge;
+
+      bridge.postMessage(message);
 
       // Increment the counter
       this.counter++;
