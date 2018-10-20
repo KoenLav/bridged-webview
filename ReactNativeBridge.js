@@ -46,8 +46,28 @@ export default function() {
         args
       });
 
+      let bridge;
+
+      if (typeof _ReactNativeBridge === "undefined") {
+        if (typeof __REACT_WEB_VIEW_BRIDGE === "undefined") {
+          if (
+            window.webkit &&
+            window.webkit.messageHandlers &&
+            window.webkit.messageHandlers.ReactNative
+          ) {
+            bridge = window.webkit.messageHandlers.ReactNative;
+          } else {
+            console.warn("ReactNativeBridge not found!");
+          }
+        } else {
+          bridge = __REACT_WEB_VIEW_BRIDGE;
+        }
+      } else {
+        bridge = _ReactNativeBridge;
+      }
+
       // Send a message to the native side of things
-      const bridge =
+      bridge =
         typeof _ReactNativeBridge === "undefined"
           ? __REACT_WEB_VIEW_BRIDGE
           : _ReactNativeBridge;
