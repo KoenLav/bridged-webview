@@ -15,7 +15,7 @@ const customAsyncFunction = (arg1, arg2, callback) => {
   callback(null, "success");
 });
 
-WebViewBridge.addAsyncFunction("myFunctionName", asyncFunction);
+WebViewBridge.addAsyncFunction("myFunctionName", customAsyncFunction);
 
 export default class App extends Component {
   render() {
